@@ -6,9 +6,13 @@
   color: #ffffff;
 }
 
-.chart{
+.chart {
   display: flex;
   justify-content: center;
+}
+
+.input-container {
+  margin-top: 10px;
 }
 /* 
 #circlechart {

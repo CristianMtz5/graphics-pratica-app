@@ -1,4 +1,5 @@
 import { CanvasLocal } from "./canvasLocal.js";
+
 let canvas: HTMLCanvasElement;
 let graphics: CanvasRenderingContext2D;
 
@@ -10,48 +11,20 @@ function cleanCanvas() {
 }
 
 function initGraphic() {
-  let disX = 8;
-  let disY = 8;
-  const miCanvas: CanvasLocal = new CanvasLocal(graphics, canvas, disX, disY);
-  miCanvas.paint();
-}
+  const barsNumber = <HTMLInputElement>document.getElementById("bars-number");
+  let valSize: number;
+  let barsNumberValue = barsNumber.value;
+  let xNumbers = barsNumberValue.split(",").map((elem) => parseFloat(elem));
+  valSize = xNumbers.length;
 
-initGraphic();
-
-function zoomI() {
-  cleanCanvas();
-  const inputW = <HTMLInputElement>document.getElementById("input-W");
-  const inputH = <HTMLInputElement>document.getElementById("input-H");
-
-  let inputWP = parseInt(inputW.value);
-  let inputHP = parseInt(inputH.value);
-
-  if (inputWP < 0 || inputHP < 0 && inputWP > 16 || inputHP > 16) {
-    initGraphic();
-    alert("Ingresa un valor entre 0 y 16");
+  if (barsNumberValue === "") {
+    alert("No se ha ingresado ningún valor");
   } else {
-    const miCanvas: CanvasLocal = new CanvasLocal(
-      graphics,
-      canvas,
-      inputWP,
-      inputHP
-    );
-    miCanvas.paint();
+    cleanCanvas();
+    const miCanvas: CanvasLocal = new CanvasLocal(graphics, canvas, valSize);
+    miCanvas.paint(xNumbers);
+    barsNumber.value = "";
   }
 }
 
-document.getElementById("btn-zoom").addEventListener("click", zoomI, false);
-
-/* Zoom con jQuery
-let zoomLvl = 1;
-let updtZoom = function(zoom){
-    zoomLvl += zoom;
-    $(canvas).css({ zoom: zoomLvl, '-moz-transform': 'scale(' + zoomLvl + ')' });
-}
-$('#zoom-in').click(function() {
-    updtZoom(0.1);
-});
-$('#zoom-out').click(function() {
-    updtZoom(-0.1);
-});  */
-
+document.getElementById("btn-graficar").addEventListener("click", initGraphic, false);
