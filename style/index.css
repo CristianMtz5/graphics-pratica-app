@@ -1,22 +1,7 @@
-#footer {
-  background: linear-gradient(0deg, #1c3643, #273b47 25%, #1e5372);
-}
-
-#footer a {
-  color: #ffffff;
-}
-
-.chart {
-  display: flex;
-  justify-content: center;
-}
-
-.input-container {
-  margin-top: 10px;
-}
-/* 
-#circlechart {
-  border-left: 2px solid #000;
-  border-right: 2px solid #000;
-}
- */
+#footer{
+    background: linear-gradient(0deg,#1c3643,#273b47 25%,#1e5372);
+  }
+  
+  #footer a{
+    color: #FFFFFF;
+  }

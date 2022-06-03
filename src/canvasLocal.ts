@@ -74,6 +74,7 @@ export class CanvasLocal {
     return Math.sin(x * 2.5);
   }
  */
+
   maxH(h: number[]): number {
     let max = h[0];
     for (let i = 1; i < h.length; i++) {
