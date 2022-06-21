@@ -1,5 +1,5 @@
 // Tria.java: Triangle represented by its vertex numbers.
-export class Tria{
+export class Tria {
   iA: number;
   iB: number;
   iC: number;

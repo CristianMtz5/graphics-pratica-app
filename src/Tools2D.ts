@@ -1,16 +1,23 @@
-import { Point2D } from './point2D.js';
-import { Triangle } from './Triangle.js';
+import { Point2D } from "./point2D.js";
+import { Triangle } from "./Triangle.js";
 
-export class Tools2D{
-  static area2(a:Point2D, b:Point2D, c:Point2D): number{
+export class Tools2D {
+  static area2(a: Point2D, b: Point2D, c: Point2D): number {
     return (a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x);
   }
 
-  static insideTriangle(a:Point2D, b:Point2D,  c:Point2D,
-      p:Point2D): boolean{ // ABC is assumed to be counter-clockwise
-    return (Tools2D.area2(a, b, p) >= 0 &&
-            Tools2D.area2(b, c, p) >= 0 &&
-            Tools2D.area2(c, a, p) >= 0);
+  static insideTriangle(
+    a: Point2D,
+    b: Point2D,
+    c: Point2D,
+    p: Point2D
+  ): boolean {
+    // ABC is assumed to be counter-clockwise
+    return (
+      Tools2D.area2(a, b, p) >= 0 &&
+      Tools2D.area2(b, c, p) >= 0 &&
+      Tools2D.area2(c, a, p) >= 0
+    );
   }
 
   /*static triangulate(p: Point2D[], tr: Triangle[] ): void {
@@ -59,9 +66,9 @@ export class Tools2D{
       }
    }*/
 
-  static distance2(p:Point2D , q:Point2D ): number{
+  static distance2(p: Point2D, q: Point2D): number {
     let dx = p.x - q.x,
-        dy = p.y - q.y;
+      dy = p.y - q.y;
     return dx * dx + dy * dy;
   }
 }

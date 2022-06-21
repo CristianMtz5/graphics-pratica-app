@@ -3,6 +3,7 @@ export class Tools2D {
         return (a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x);
     }
     static insideTriangle(a, b, c, p) {
+        // ABC is assumed to be counter-clockwise
         return (Tools2D.area2(a, b, p) >= 0 &&
             Tools2D.area2(b, c, p) >= 0 &&
             Tools2D.area2(c, a, p) >= 0);

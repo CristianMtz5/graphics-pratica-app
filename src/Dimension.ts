@@ -1,4 +1,4 @@
-export class Dimension{
+export class Dimension {
   private _width: number;
   private _height: number;
 
@@ -7,11 +7,11 @@ export class Dimension{
     this._height = h;
   }
 
-  get width(): number{
+  get width(): number {
     return this._width;
   }
-  
-  get height(): number{
+
+  get height(): number {
     return this._height;
   }
 }

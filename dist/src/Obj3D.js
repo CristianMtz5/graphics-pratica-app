@@ -1,13 +1,13 @@
 // Obj3D.java: A 3D object and its 2D representation.
 // Uses: Point2D (Section 1.5), Point3D (Section 3.9),
 //       Polygon3D, Input (Section 5.5).
-import { Point2D } from './point2D.js';
-import { Point3D } from './point3D.js';
-import { Input } from './Input.js';
-import { Polygon3D } from './Polygon3D.js';
+import { Point2D } from "./point2D.js";
+import { Point3D } from "./point3D.js";
+import { Input } from "./Input.js";
+import { Polygon3D } from "./Polygon3D.js";
 export class Obj3D {
     constructor() {
-        this.theta = 0.30;
+        this.theta = 0.3;
         this.phi = 1.3;
         this.sunZ = 1 / Math.sqrt(3);
         this.sunY = this.sunZ;
@@ -15,7 +15,7 @@ export class Obj3D {
         this.inprodMin = 1e30;
         this.inprodMax = -1e30;
         this.w = new Array(); // World coordinates
-        this.polyList = new Array(); // Polygon3D objects 
+        this.polyList = new Array(); // Polygon3D objects
         this.file = " ";
         this.indices = [];
         this.tind = 0; // File name
@@ -29,13 +29,27 @@ export class Obj3D {
         this.xMax = this.yMax = this.zMax = -1e30;
         return this.readObject(inp); // Read from inp into obj
     }
-    getPolyList() { return this.polyList; }
-    getFName() { return this.file; }
-    getE() { return this.e; }
-    getVScr() { return this.vScr; }
-    getImgCenter() { return this.imgCenter; }
-    getRho() { return this.rho; }
-    getD() { return this.d; }
+    getPolyList() {
+        return this.polyList;
+    }
+    getFName() {
+        return this.file;
+    }
+    getE() {
+        return this.e;
+    }
+    getVScr() {
+        return this.vScr;
+    }
+    getImgCenter() {
+        return this.imgCenter;
+    }
+    getRho() {
+        return this.rho;
+    }
+    getD() {
+        return this.d;
+    }
     failing() {
         return false;
     }
@@ -63,10 +77,11 @@ export class Obj3D {
         this.shiftToOrigin(); // Origin in center of object.
         let ch;
         let count = 0;
-        do { // Skip the line "Faces:"
+        do {
+            // Skip the line "Faces:"
             ch = inp.readChar();
             count++;
-        } while (!inp.eof() && ch != '\n');
+        } while (!inp.eof() && ch != "\n");
         if (count < 6 || count > 8) {
             console.log("Invalid input file");
             return this.failing();
@@ -81,16 +96,17 @@ export class Obj3D {
                     break;
                 }
                 let absi = Math.abs(i);
-                if (i == 0 || absi >= this.w.length ||
-                    this.w[absi] == null) {
-                    console.log("Invalid vertex number: " + absi +
-                        " must be defined, nonzero and less than " + this.w.length);
+                if (i == 0 || absi >= this.w.length || this.w[absi] == null) {
+                    console.log("Invalid vertex number: " +
+                        absi +
+                        " must be defined, nonzero and less than " +
+                        this.w.length);
                     return this.failing();
                 }
                 vnrs.push(i);
             }
             ch = inp.readChar();
-            if (ch != '.' && ch != '#')
+            if (ch != "." && ch != "#")
                 break;
             // Ignore input lines with only one vertex number:
             if (vnrs.length >= 2)
@@ -150,6 +166,7 @@ export class Obj3D {
         this.v43 = -this.rho;
     }
     eyeAndScreen(dim) {
+        // Called in paint method of Canvas class
         this.initPersp();
         let n = this.w.length;
         this.e = new Array(n);
@@ -165,7 +182,7 @@ export class Obj3D {
                 let x = this.v11 * P.x + this.v21 * P.y;
                 let y = this.v12 * P.x + this.v22 * P.y + this.v32 * P.z;
                 let z = this.v13 * P.x + this.v23 * P.y + this.v33 * P.z + this.v43;
-                let Pe = this.e[i] = new Point3D(x, y, z);
+                let Pe = (this.e[i] = new Point3D(x, y, z));
                 let xScr = -Pe.x / Pe.z, yScr = -Pe.y / Pe.z;
                 this.vScr[i] = new Point2D(xScr, yScr);
                 if (xScr < xScrMin)
@@ -180,7 +197,7 @@ export class Obj3D {
         }
         let rangeX = xScrMax - xScrMin, rangeY = yScrMax - yScrMin;
         this.d = 0.95 * Math.min(dim.width / rangeX, dim.height / rangeY);
-        this.imgCenter = new Point2D(this.d * (xScrMin + xScrMax) / 2, this.d * (yScrMin + yScrMax) / 2);
+        this.imgCenter = new Point2D((this.d * (xScrMin + xScrMax)) / 2, (this.d * (yScrMin + yScrMax)) / 2);
         for (let i = 1; i < n; i++) {
             if (this.vScr[i] != null) {
                 this.vScr[i].x *= this.d;

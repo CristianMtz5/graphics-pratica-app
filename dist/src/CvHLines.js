@@ -1,15 +1,19 @@
-import { Point2D } from './point2D.js';
-import { Dimension } from './Dimension.js';
-import { Point3D } from './point3D.js';
-import { Tools2D } from './Tools2D.js';
+import { Point2D } from "./point2D.js";
+import { Dimension } from "./Dimension.js";
+import { Point3D } from "./point3D.js";
+import { Tools2D } from "./Tools2D.js";
 export class CvHLines {
     constructor(g, canvas) {
         this.chunkSize = 4;
         this.g = g;
         this.canvas = canvas;
     }
-    getObj() { return this.obj; }
-    setObj(obj) { this.obj = obj; }
+    getObj() {
+        return this.obj;
+    }
+    setObj(obj) {
+        this.obj = obj;
+    }
     paint() {
         if (this.obj == undefined)
             return;
@@ -51,7 +55,7 @@ export class CvHLines {
         this.hLimit = -1e-6 * this.obj.getRho();
         this.buildLineSet();
         // Construct an array of triangles in
-        // each polygon and count the total number 
+        // each polygon and count the total number
         // of triangles.
         this.nTria = 0;
         for (let j = 0; j < nFaces; j++) {
@@ -121,7 +125,8 @@ export class CvHLines {
                     for (l = 0; l < nCon; l++)
                         if (this.connect[i1][l] == j1)
                             break;
-                    if (l == nCon) { // Not found:
+                    if (l == nCon) {
+                        // Not found:
                         if (nCon % this.chunkSize == 0) {
                             let temp = new Array(nCon + this.chunkSize);
                             for (l = 0; l < nCon; l++)
@@ -135,13 +140,17 @@ export class CvHLines {
             }
         }
     }
-    iX(x) { return Math.round(this.centerX + x - this.imgCenter.x); }
-    iY(y) { return Math.round(this.centerY - y + this.imgCenter.y); }
+    iX(x) {
+        return Math.round(this.centerX + x - this.imgCenter.x);
+    }
+    iY(y) {
+        return Math.round(this.centerY - y + this.imgCenter.y);
+    }
     /*int iX(float x){return Math.round(centerX + x - imgCenter.x);}
-    int iY(float y){return Math.round(centerY - y + imgCenter.y);}*/
+      int iY(float y){return Math.round(centerY - y + imgCenter.y);}*/
     toString(t) {
         // From screen device units (pixels) to HP-GL units (0-10000) :
-        let i = Math.round(5000 + t * 9000 / this.maxScreenRange);
+        let i = Math.round(5000 + (t * 9000) / this.maxScreenRange);
         let s = "";
         let n = 1000;
         for (let j = 3; j >= 0; j--) {
@@ -179,10 +188,10 @@ export class CvHLines {
             let iA = t.iA, iB = t.iB, iC = t.iC;
             let aScr = vScr[iA], bScr = vScr[iB], cScr = vScr[iC];
             // 1. Minimax test for x and y screen coordinates:
-            if (maxPQx <= aScr.x && maxPQx <= bScr.x && maxPQx <= cScr.x
-                || minPQx >= aScr.x && minPQx >= bScr.x && minPQx >= cScr.x
-                || maxPQy <= aScr.y && maxPQy <= bScr.y && maxPQy <= cScr.y
-                || minPQy >= aScr.y && minPQy >= bScr.y && minPQy >= cScr.y)
+            if ((maxPQx <= aScr.x && maxPQx <= bScr.x && maxPQx <= cScr.x) ||
+                (minPQx >= aScr.x && minPQx >= bScr.x && minPQx >= cScr.x) ||
+                (maxPQy <= aScr.y && maxPQy <= bScr.y && maxPQy <= cScr.y) ||
+                (minPQy >= aScr.y && minPQy >= bScr.y && minPQy >= cScr.y))
                 continue; // This triangle does not obscure PQ.
             // 2. Test if PQ is an edge of ABC:
             if ((iP == iA || iP == iB || iP == iC) &&
@@ -196,20 +205,20 @@ export class CvHLines {
             //    by line AB, on the side other than that of C?
             //    Similar for the edges BC and CA.
             let eps = 0.1; // Relative to numbers of pixels
-            if (Tools2D.area2(aScr, bScr, pScr) < eps &&
-                Tools2D.area2(aScr, bScr, qScr) < eps ||
-                Tools2D.area2(bScr, cScr, pScr) < eps &&
-                    Tools2D.area2(bScr, cScr, qScr) < eps ||
-                Tools2D.area2(cScr, aScr, pScr) < eps &&
-                    Tools2D.area2(cScr, aScr, qScr) < eps)
+            if ((Tools2D.area2(aScr, bScr, pScr) < eps &&
+                Tools2D.area2(aScr, bScr, qScr) < eps) ||
+                (Tools2D.area2(bScr, cScr, pScr) < eps &&
+                    Tools2D.area2(bScr, cScr, qScr) < eps) ||
+                (Tools2D.area2(cScr, aScr, pScr) < eps &&
+                    Tools2D.area2(cScr, aScr, qScr) < eps))
                 continue; // This triangle does not obscure PQ.
             // 5. Test (2D) if A, B and C lie on the same side
             //    of the infinite line through P and Q:
             let pqa = Tools2D.area2(pScr, qScr, aScr);
             let pqb = Tools2D.area2(pScr, qScr, bScr);
             let pqc = Tools2D.area2(pScr, qScr, cScr);
-            if (pqa < +eps && pqb < +eps && pqc < +eps ||
-                pqa > -eps && pqb > -eps && pqc > -eps)
+            if ((pqa < +eps && pqb < +eps && pqc < +eps) ||
+                (pqa > -eps && pqb > -eps && pqc > -eps))
                 continue; // This triangle does not obscure PQ.
             // 6. Test if neither P nor Q lies behind the
             //    infinite plane through A, B and C:
@@ -227,7 +236,7 @@ export class CvHLines {
             // 8. If P nearer than ABC and inside, PQ visible;
             //    the same for Q:
             let h1 = h + eps1;
-            if (hP > h1 && pInside || hQ > h1 && qInside)
+            if ((hP > h1 && pInside) || (hQ > h1 && qInside))
                 continue; // This triangle does not obscure PQ.
             // 9. Compute the intersections I and J of PQ
             // with ABC in 2D.
@@ -246,8 +255,7 @@ export class CvHLines {
                         // lambda = PI/PQ
                         // (I is point of intersection)
                         if (lambda > -0.0001 && lambda < 1.0001) {
-                            if (pInside != qInside &&
-                                lambda > 0.0001 && lambda < 0.9999) {
+                            if (pInside != qInside && lambda > 0.0001 && lambda < 0.9999) {
                                 lambdaMin = lambdaMax = lambda;
                                 break;
                                 // Only one point of intersection
@@ -268,7 +276,7 @@ export class CvHLines {
             if (!pInside && lambdaMin > 0.001) {
                 let iScrx = pScr.x + lambdaMin * u1, iScry = pScr.y + lambdaMin * u2;
                 // Back from screen to eye coordinates:
-                let zI = 1 / (lambdaMin / zQ + (1 - lambdaMin) / zP), xI = -zI * iScrx / d, yI = -zI * iScry / d;
+                let zI = 1 / (lambdaMin / zQ + (1 - lambdaMin) / zP), xI = (-zI * iScrx) / d, yI = (-zI * iScry) / d;
                 if (a * xI + b * yI + c * zI > h1)
                     continue; // This triangle does not obscure PQ.
                 let iScr = new Point2D(iScrx, iScry);
@@ -277,7 +285,7 @@ export class CvHLines {
             }
             if (!qInside && lambdaMax < 0.999) {
                 let jScrx = pScr.x + lambdaMax * u1, jScry = pScr.y + lambdaMax * u2;
-                let zJ = 1 / (lambdaMax / zQ + (1 - lambdaMax) / zP), xJ = -zJ * jScrx / d, yJ = -zJ * jScry / d;
+                let zJ = 1 / (lambdaMax / zQ + (1 - lambdaMax) / zP), xJ = (-zJ * jScrx) / d, yJ = (-zJ * jScry) / d;
                 if (a * xJ + b * yJ + c * zJ > h1)
                     continue; // This triangle does not obscure PQ.
                 let jScr = new Point2D(jScrx, jScry);

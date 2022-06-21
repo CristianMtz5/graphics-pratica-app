@@ -1,14 +1,23 @@
-import { Dimension } from './Dimension.js';
+import { Dimension } from "./Dimension.js";
 export class CvWireframe {
     constructor(g, canvas) {
         this.g = g;
         this.canvas = canvas;
     }
-    getObj() { return this.obj; }
-    setObj(obj) { this.obj = obj; }
-    iX(x) { return Math.round(this.centerX + x - this.imgCenter.x); }
-    iY(y) { return Math.round(this.centerY - y + this.imgCenter.y); }
+    getObj() {
+        return this.obj;
+    }
+    setObj(obj) {
+        this.obj = obj;
+    }
+    iX(x) {
+        return Math.round(this.centerX + x - this.imgCenter.x);
+    }
+    iY(y) {
+        return Math.round(this.centerY - y + this.imgCenter.y);
+    }
     paint() {
+        //g: CanvasRenderingContext2D, canvas: HTMLCanvasElement
         if (this.obj == undefined)
             return;
         let polyList = this.obj.getPolyList();

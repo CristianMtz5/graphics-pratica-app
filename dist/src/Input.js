@@ -20,16 +20,16 @@ export class Input {
         return ch;
     }
     isWhiteSpace(ch) {
-        return (ch == ' ');
+        return ch == " ";
     }
     isEmpty(ch) {
-        return (ch.trim() == "");
+        return ch.trim() == "";
     }
     isEnter(ch) {
-        return (ch == '\n' || ch == '\r');
+        return ch == "\n" || ch == "\r";
     }
     isDigit(ch) {
-        return (ch >= '0' && ch <= '9');
+        return ch >= "0" && ch <= "9";
     }
     pushBack() {
         this.index--;
@@ -40,7 +40,7 @@ export class Input {
         do {
             ch = this.readChar();
         } while (this.isWhiteSpace(ch) || this.isEnter(ch));
-        if (ch === '-') {
+        if (ch === "-") {
             neg = true;
             ch = this.readChar();
         }
@@ -58,7 +58,7 @@ export class Input {
             }
             x = 10 * x + Number(ch);
         }
-        return (neg ? -x : x);
+        return neg ? -x : x;
     }
     readFloat() {
         let ch;
@@ -67,11 +67,11 @@ export class Input {
         do {
             ch = this.readChar();
         } while (this.isWhiteSpace(ch));
-        if (ch == '-') {
+        if (ch == "-") {
             neg = true;
             ch = this.readChar();
         }
-        if (ch == '.') {
+        if (ch == ".") {
             nDec = 1;
             ch = this.readChar();
         }
@@ -88,7 +88,7 @@ export class Input {
                 if (nDec >= 0)
                     nDec++;
             }
-            else if (ch == '.' && nDec == -1)
+            else if (ch == "." && nDec == -1)
                 nDec = 0;
             else
                 break;
@@ -97,7 +97,7 @@ export class Input {
             x *= 0.1;
             nDec--;
         }
-        if (ch == 'e' || ch == 'E') {
+        if (ch == "e" || ch == "E") {
             let exp = this.readInt();
             if (!this.fails()) {
                 while (exp < 0) {
@@ -112,13 +112,14 @@ export class Input {
         }
         else
             this.pushBack();
-        return (neg ? -x : x);
+        return neg ? -x : x;
     }
     skipRest() {
+        // Skip rest of line
         let ch;
         do {
             ch = this.readChar();
-        } while (!(this.eof() || ch == '\n'));
+        } while (!(this.eof() || ch == "\n"));
     }
     fails() {
         return !this.ok;
@@ -130,6 +131,7 @@ export class Input {
         this.ok = true;
     }
     readString() {
+        // Read first string between quotes (").
         let str = " ";
         let ch;
         do {
@@ -138,7 +140,8 @@ export class Input {
         // Initial quote
         for (;;) {
             ch = this.readChar();
-            if (this.eof() || ch == '"') // Final quote (end of string)
+            if (this.eof() || ch == '"')
+                // Final quote (end of string)
                 break;
             str += ch;
         }
