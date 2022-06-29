@@ -1,0 +1,6 @@
+El proyecto consisten en hacer girar las hélices del molino con y sin intervalo.
+
+Seleccionar boton "Mover Piezas".
+Seleccionar boton "Girar Hélices" para mover las hélices sin intervalo.
+Seleccionar boton "Girar Hélices (con intervalo)" para ver la animación sin tener que hacer click constantemente.
+Seleccionar boton "Detener Hélices" para pausar el movimiento.
